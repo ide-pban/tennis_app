@@ -568,6 +568,14 @@
             flex-shrink: 0;
         }
 
+        .match-card-compact .separator {
+            display: inline-block !important;
+            font-size: 10px;
+            color: #9ca3af;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
 
         .match-card-compact .vs-compact {
             font-size: 12px;
@@ -968,8 +976,10 @@
             }
             .player {
                 font-size: 10px;
-                padding: 2px 4px;
-                margin: 1px;
+                padding: 1px 3px;
+            }
+            .separator {
+                font-size: 8px;
             }
             
             /* モバイル特有の可読性向上 */
@@ -1092,6 +1102,9 @@
             .player {
                 font-size: 11px;
                 padding: 2px 4px;
+            }
+            .separator {
+                font-size: 9px;
             }
         }
 
@@ -1595,16 +1608,18 @@
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair1.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player ${match.pair1.players[0].position === 'front' ? 'player-front' : 'player-back'}">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
-                                                <span class="player ${match.pair1.players[1].position === 'front' ? 'player-front' : 'player-back'}">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
+                                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
+                                                <span class="separator">+</span>
+                                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
                                             </div>
                                         </div>
                                         <div class="vs-compact">VS</div>
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair2.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player ${match.pair2.players[0].position === 'front' ? 'player-front' : 'player-back'}">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
-                                                <span class="player ${match.pair2.players[1].position === 'front' ? 'player-front' : 'player-back'}">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
+                                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
+                                                <span class="separator">+</span>
+                                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
                                             </div>
                                         </div>
                                     </div>
