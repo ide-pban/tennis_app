@@ -240,7 +240,7 @@
 
         .generate-btn {
             padding: 20px 50px;
-            background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
             border: none;
             border-radius: 20px;
@@ -248,7 +248,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
             position: relative;
             overflow: hidden;
             margin: 20px auto;
@@ -275,13 +275,13 @@
 
         .generate-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(22, 163, 74, 0.5);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
         }
 
         /* タッチデバイス用の操作性向上 */
         .generate-btn:active {
             transform: translateY(-1px) scale(0.98);
-            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
 
         /* タッチ用のタップ領域拡大 */
@@ -311,7 +311,7 @@
             /* タッチデバイス専用スタイル */
             .generate-btn:hover {
                 transform: none;
-                box-shadow: 0 8px 25px rgba(22, 163, 74, 0.4);
+                box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
             }
             
             .match-card:hover,
@@ -321,7 +321,7 @@
             
             /* タッチ用のアクティブ状態を強調 */
             .generate-btn:active {
-                background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+                background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
                 transform: scale(0.95);
             }
             
@@ -625,35 +625,46 @@
             margin: 0 auto;
             max-width: 100%;
             justify-content: center;
+            justify-items: center;
+            place-content: center;
         }
 
         /* 1面用（1列） */
         .courts-grid-1 {
             grid-template-columns: 1fr;
             max-width: 450px;
+            justify-content: center;
+            margin: 0 auto;
         }
 
         /* 2面用（2列） */
         .courts-grid-2 {
             grid-template-columns: repeat(2, 1fr);
             max-width: 950px;
+            justify-content: center;
+            margin: 0 auto;
         }
 
         /* 3面用（3列） */
         .courts-grid-3 {
             grid-template-columns: repeat(3, 1fr);
             max-width: 1400px;
+            justify-content: center;
+            margin: 0 auto;
         }
 
         /* 4面用（2列2行） */
         .courts-grid-4 {
             grid-template-columns: repeat(2, 1fr);
             max-width: 950px;
+            justify-content: center;
+            margin: 0 auto;
         }
 
         /* 5面以上用（自動調整） */
         .courts-grid-auto {
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            justify-content: center;
         }
 
         .court-column {
@@ -826,19 +837,22 @@
             
             /* コート選択の改善 */
             #courtSelection {
-                flex-direction: column !important;
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
                 gap: 8px !important;
-                align-items: flex-start !important;
+                align-items: stretch !important;
             }
             #courtSelection label {
                 font-size: 14px !important;
-                padding: 8px !important;
+                padding: 12px 8px !important;
                 background: #f8fafc;
                 border-radius: 8px;
-                width: 100%;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 gap: 8px;
+                text-align: center;
+                min-height: 50px;
             }
             #courtSelection input[type="checkbox"] {
                 transform: scale(1.2);
@@ -866,26 +880,26 @@
                 gap: 15px;
             }
             
-            /* スマホでは横スクロール表示 */
-            .courts-grid-1,
+            /* スマホでは2列グリッド表示 */
+            .courts-grid-1 {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 15px;
+                max-width: 100%;
+            }
+            
             .courts-grid-2,
             .courts-grid-3,
             .courts-grid-4,
             .courts-grid-auto {
-                display: flex;
-                flex-direction: row;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
-                overflow-x: auto;
-                padding: 0 10px;
                 max-width: 100%;
-                justify-content: flex-start;
-                -webkit-overflow-scrolling: touch;
             }
             
             .court-column {
                 min-height: 300px;
-                flex: 0 0 280px;
-                max-width: 280px;
             }
             
             .court-header {
@@ -1195,20 +1209,20 @@
                     </select>
                 </div>
             </div>
-                <div class="input-group">
+                <div class="input-group" style="text-align: center;">
                     <label>使用するコート</label>
-                    <div id="courtSelection" style="display: flex; gap: 10px; margin-top: 10px;">
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="A" checked> コートA
+                    <div id="courtSelection" style="display: flex; gap: 15px; margin-top: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="A" checked style="margin: 0; vertical-align: middle;"> コートA
                         </label>
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="B" checked> コートB
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="B" checked style="margin: 0; vertical-align: middle;"> コートB
                         </label>
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="C"> コートC
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="C" style="margin: 0; vertical-align: middle;"> コートC
                         </label>
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="D"> コートD
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="D" style="margin: 0; vertical-align: middle;"> コートD
                         </label>
                     </div>
                 </div>
@@ -1224,7 +1238,7 @@
         <div class="results-section" id="resultsSection" style="display: none;">
             <div class="schedule-section">
                 <h2 class="section-title">試合スケジュール</h2>
-                <div id="matchesContainer">
+                <div id="matchesContainer" style="display: flex; justify-content: center; width: 100%;">
                     <!-- 試合がここに表示される -->
                 </div>
             </div>
@@ -1591,7 +1605,7 @@
                 `;
             });
 
-            container.innerHTML = `<div class="courts-grid ${gridClass}">${courtColumns.join('')}</div>`;
+            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto;">${courtColumns.join('')}</div>`;
         }
         
         function getCourtGridClass(courtCount) {
