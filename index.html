@@ -884,10 +884,12 @@
             
             /* コート表示最適化 */
             .courts-grid {
-                gap: 10px;
+                gap: 8px;
                 width: 100%;
-                padding: 0 5px;
+                padding: 0;
+                margin: 0 auto;
                 box-sizing: border-box;
+                justify-content: center;
             }
             
             /* スマホでは2列グリッド表示 */
@@ -904,17 +906,22 @@
             .courts-grid-auto {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                gap: 8px;
                 max-width: 100%;
                 width: 100%;
+                padding: 0;
+                margin: 0;
             }
             
             .court-column {
                 min-height: 300px;
-                width: 100%;
-                max-width: none;
+                width: calc(50% - 4px);
+                max-width: calc(50% - 4px);
                 box-sizing: border-box;
                 overflow: hidden;
+                margin: 0;
+                padding: 0;
+                border-radius: 12px;
             }
             
             .court-header {
