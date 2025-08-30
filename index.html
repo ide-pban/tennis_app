@@ -805,7 +805,13 @@
 
         /* 小さなスマートフォン用 */
         @media (max-width: 480px) {
-            .container { padding: 10px; }
+            .container { 
+                padding: 10px; 
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+                box-sizing: border-box;
+            }
             .header { 
                 padding: 20px 15px; 
                 text-align: left;
@@ -888,9 +894,15 @@
             /* 結果セクション最適化 */
             .results-section { 
                 margin-top: 20px;
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
             }
             .schedule-section {
                 padding: 20px 15px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
             
             
@@ -905,17 +917,21 @@
             .courts-grid-3,
             .courts-grid-4,
             .courts-grid-auto {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 15px;
-                max-width: 100%;
-                width: 100%;
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                justify-content: center !important;
+                margin: 0 auto !important;
             }
             
             .court-column {
-                min-height: 300px;
-                width: 100%;
-                box-sizing: border-box;
+                min-height: 300px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+                flex-shrink: 0 !important;
             }
             
             .court-header {
@@ -1618,7 +1634,7 @@
                 `;
             });
 
-            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto;">${courtColumns.join('')}</div>`;
+            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto; width: 100%; overflow-x: hidden;">${courtColumns.join('')}</div>`;
         }
         
         function getCourtGridClass(courtCount) {
