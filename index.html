@@ -884,10 +884,7 @@
             
             /* コート表示最適化 */
             .courts-grid {
-                gap: 10px;
-                width: 100%;
-                padding: 0 5px;
-                box-sizing: border-box;
+                gap: 15px;
             }
             
             /* スマホでは2列グリッド表示 */
@@ -904,17 +901,12 @@
             .courts-grid-auto {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                gap: 15px;
                 max-width: 100%;
-                width: 100%;
             }
             
             .court-column {
                 min-height: 300px;
-                width: 100%;
-                max-width: none;
-                box-sizing: border-box;
-                overflow: hidden;
             }
             
             .court-header {
@@ -1150,7 +1142,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎾 自動試合スケジュール</h1>
+            <h1>🎾 自動ペア決め & 試合スケジュール生成</h1>
         </div>
 
         <div class="input-section">
