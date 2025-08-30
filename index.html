@@ -885,12 +885,7 @@
             
             /* コート表示最適化 */
             .courts-grid {
-                gap: 8px;
-                width: 100%;
-                padding: 0;
-                margin: 0 auto;
-                box-sizing: border-box;
-                justify-content: center;
+                gap: 15px;
             }
             
             /* スマホでは2列グリッド表示 */
@@ -907,22 +902,12 @@
             .courts-grid-auto {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                gap: 15px;
                 max-width: 100%;
-                width: 100%;
-                padding: 0;
-                margin: 0;
             }
             
             .court-column {
                 min-height: 300px;
-                width: calc(50% - 4px);
-                max-width: calc(50% - 4px);
-                box-sizing: border-box;
-                overflow: hidden;
-                margin: 0;
-                padding: 0;
-                border-radius: 12px;
             }
             
             .court-header {
@@ -1263,7 +1248,7 @@
         <div class="results-section" id="resultsSection" style="display: none;">
             <div class="schedule-section">
                 <h2 class="section-title">試合スケジュール</h2>
-                <div id="matchesContainer" style="display: flex; justify-content: center; width: 100%;">
+                <div id="matchesContainer">
                     <!-- 試合がここに表示される -->
                 </div>
             </div>
@@ -1630,7 +1615,7 @@
                 `;
             });
 
-            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto;">${courtColumns.join('')}</div>`;
+            container.innerHTML = `<div class="courts-grid ${gridClass}">${courtColumns.join('')}</div>`;
         }
         
         function getCourtGridClass(courtCount) {
