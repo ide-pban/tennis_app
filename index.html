@@ -845,10 +845,8 @@
             #courtSelection {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                grid-template-rows: repeat(2, 1fr) !important;
                 gap: 8px !important;
                 align-items: stretch !important;
-                justify-content: center !important;
             }
             #courtSelection label {
                 font-size: 14px !important;
@@ -1219,20 +1217,20 @@
                     </select>
                 </div>
             </div>
-                <div class="input-group" style="text-align: center;">
+                <div class="input-group">
                     <label>使用するコート</label>
-                    <div id="courtSelection" style="display: flex; gap: 15px; margin-top: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
-                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="A" checked style="margin: 0; vertical-align: middle;"> コートA
+                    <div id="courtSelection" style="display: flex; gap: 10px; margin-top: 10px;">
+                        <label style="font-size: 16px; font-weight: normal;">
+                            <input type="checkbox" value="A" checked> コートA
                         </label>
-                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="B" checked style="margin: 0; vertical-align: middle;"> コートB
+                        <label style="font-size: 16px; font-weight: normal;">
+                            <input type="checkbox" value="B" checked> コートB
                         </label>
-                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="C" style="margin: 0; vertical-align: middle;"> コートC
+                        <label style="font-size: 16px; font-weight: normal;">
+                            <input type="checkbox" value="C"> コートC
                         </label>
-                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="D" style="margin: 0; vertical-align: middle;"> コートD
+                        <label style="font-size: 16px; font-weight: normal;">
+                            <input type="checkbox" value="D"> コートD
                         </label>
                     </div>
                 </div>
