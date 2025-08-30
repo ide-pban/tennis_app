@@ -309,9 +309,14 @@
         /* タッチフィードバック改善 */
         @media (hover: none) and (pointer: coarse) {
             /* タッチデバイス専用スタイル */
+            .generate-btn {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+            }
+            
             .generate-btn:hover {
                 transform: none;
                 box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
             }
             
             .match-card:hover,
@@ -321,7 +326,7 @@
             
             /* タッチ用のアクティブ状態を強調 */
             .generate-btn:active {
-                background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+                background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
                 transform: scale(0.95);
             }
             
@@ -839,8 +844,10 @@
             #courtSelection {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
+                grid-template-rows: repeat(2, 1fr) !important;
                 gap: 8px !important;
                 align-items: stretch !important;
+                justify-content: center !important;
             }
             #courtSelection label {
                 font-size: 14px !important;
@@ -1135,8 +1142,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎾 テニス専用アプリ</h1>
-            <p>前衛・後衛人数を入力するだけで自動ペア決め & 試合スケジュール生成</p>
+            <h1>🎾 自動ペア決め & 試合スケジュール生成</h1>
         </div>
 
         <div class="input-section">
