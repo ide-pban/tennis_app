@@ -652,6 +652,42 @@
             flex-shrink: 0;
         }
 
+        /* 新しいタイムライン表示用スタイル */
+        .matches-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .match-order-center {
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .match-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .match-court {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: white;
+            min-width: 70px;
+            text-align: center;
+        }
+
         /* 小さなスマートフォン用 */
         @media (max-width: 480px) {
             .container { padding: 10px; }
@@ -743,24 +779,11 @@
                 font-size: 11px;
             }
             
-            /* コート表示最適化 */
-            .courts-grid { 
-                flex-direction: column;
-                overflow-x: visible;
-                gap: 15px;
-            }
-            .court-column {
-                flex: 1 1 auto;
-            }
-            .court-header {
-                padding: 15px 12px;
-            }
-            .court-header h3 {
-                font-size: 1.2em;
-            }
-            .matches-list {
-                padding: 15px 12px;
+            /* タイムライン表示最適化 */
+            .matches-timeline {
                 gap: 12px;
+                max-width: 100%;
+                padding: 0 5px;
             }
             
             /* コンパクトマッチカード最適化 */
@@ -770,12 +793,13 @@
             .match-info {
                 margin-bottom: 6px;
             }
-            .match-number {
+            .match-order-center {
                 font-size: 12px;
             }
-            .match-order {
+            .match-court {
                 font-size: 10px;
                 padding: 2px 6px;
+                min-width: 50px;
             }
             .match-vs {
                 flex-direction: row !important;
@@ -883,13 +907,9 @@
                 padding: 25px 20px;
             }
             
-            .courts-grid { 
-                flex-direction: column;
-                overflow-x: visible;
-                gap: 20px;
-            }
-            .court-column {
-                flex: 1 1 auto;
+            .matches-timeline {
+                gap: 18px;
+                max-width: 100%;
             }
             
             /* タブレット用の試合表示調整 */
@@ -933,13 +953,9 @@
                 margin-top: 30px; 
             }
             
-            .courts-grid {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .court-column {
-                flex: 0 0 calc(50% - 10px);
-                max-width: 350px;
+            .matches-timeline {
+                gap: 20px;
+                max-width: 700px;
             }
         }
     </style>
@@ -987,27 +1003,6 @@
                 🏋️‍♂️ ペア組み合わせ・試合を自動生成
             </button>
 
-            <div id="statsInfo" class="stats-info" style="display: none;">
-                <h3>生成結果</h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalPlayers">0</div>
-                        <div class="stat-label">総参加者</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalMatches">0</div>
-                        <div class="stat-label">試合数</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalRounds">0</div>
-                        <div class="stat-label">ラウンド数</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="activeCourts">0</div>
-                        <div class="stat-label">使用コート数</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="results-section" id="resultsSection" style="display: none;">
@@ -1058,9 +1053,6 @@
             
             // 結果表示
             displayResults();
-            
-            // 統計更新
-            updateStats(frontCount + backCount, selectedCourts.length);
         }
 
         function generatePlayers(frontCount, backCount) {
@@ -1182,55 +1174,98 @@
         }
         
         function generateRoundBasedSchedule() {
-            const maxRounds = Math.max(...pairs.map(p => p.round || 1));
-            let matchNumber = 1;
+            const allPossibleMatches = [];
             
-            for (let currentRound = 1; currentRound <= maxRounds; currentRound++) {
-                // 現在のラウンドに参加するペア
-                const roundPairs = pairs.filter(p => (p.round || 1) <= currentRound);
-                
-                // このラウンドでの対戦組み合わせを生成
-                const roundMatches = [];
-                
-                for (let i = 0; i < roundPairs.length; i++) {
-                    for (let j = i + 1; j < roundPairs.length; j++) {
-                        const pair1 = roundPairs[i];
-                        const pair2 = roundPairs[j];
-                        
-                        // 同じラウンドで作られたペア同士、または同じ番号同士の対戦は避ける
-                        if (shouldAvoidMatch(pair1, pair2) || 
-                            (pair1.round === pair2.round && pair1.round === currentRound)) {
-                            continue;
-                        }
-                        
-                        roundMatches.push({
-                            pair1: pair1,
-                            pair2: pair2,
-                            priority: Math.abs((pair1.round || 1) - (pair2.round || 1)) // ラウンド差を優先度に
-                        });
+            // すべての可能な対戦を生成
+            for (let i = 0; i < pairs.length; i++) {
+                for (let j = i + 1; j < pairs.length; j++) {
+                    const pair1 = pairs[i];
+                    const pair2 = pairs[j];
+                    
+                    // 同じ番号同士の対戦は避ける
+                    if (shouldAvoidMatch(pair1, pair2)) {
+                        continue;
                     }
+                    
+                    allPossibleMatches.push({
+                        pair1: pair1,
+                        pair2: pair2,
+                        priority: Math.abs((pair1.round || 1) - (pair2.round || 1))
+                    });
+                }
+            }
+            
+            // 優先度順にソート
+            allPossibleMatches.sort((a, b) => a.priority - b.priority);
+            
+            // 連続回避を考慮した試合選択
+            const selectedMatches = selectMatchesWithContinuityAvoidance(allPossibleMatches);
+            
+            // 試合番号とコートを割り当て
+            selectedMatches.forEach((match, index) => {
+                const courtIndex = index % courts.length;
+                const assignedCourt = courts[courtIndex] || { number: courtIndex + 1, label: String.fromCharCode(65 + courtIndex) };
+                
+                matches.push({
+                    number: index + 1,
+                    round: Math.max(match.pair1.round || 1, match.pair2.round || 1),
+                    pair1: match.pair1,
+                    pair2: match.pair2,
+                    court: assignedCourt
+                });
+            });
+        }
+        
+        function selectMatchesWithContinuityAvoidance(possibleMatches) {
+            const selectedMatches = [];
+            const usedPairs = new Set();
+            const lastPlayerNumbers = { front: null, back: null };
+            
+            for (const match of possibleMatches) {
+                const pair1Id = match.pair1.number;
+                const pair2Id = match.pair2.number;
+                
+                // ペアが既に使用されているかチェック
+                if (usedPairs.has(pair1Id) || usedPairs.has(pair2Id)) {
+                    continue;
                 }
                 
-                // 優先度順にソート（ラウンド差が小さいものを優先）
-                roundMatches.sort((a, b) => a.priority - b.priority);
+                // 連続チェック
+                const pair1Players = getPlayerNumbers(match.pair1);
+                const pair2Players = getPlayerNumbers(match.pair2);
                 
-                // ラウンド内で対戦を組織化
-                const organizedMatches = organizeRoundMatches(roundMatches);
+                const hasContinuity = 
+                    (lastPlayerNumbers.front && 
+                     (pair1Players.front === lastPlayerNumbers.front || 
+                      pair2Players.front === lastPlayerNumbers.front)) ||
+                    (lastPlayerNumbers.back && 
+                     (pair1Players.back === lastPlayerNumbers.back || 
+                      pair2Players.back === lastPlayerNumbers.back));
                 
-                // 試合をスケジュールに追加
-                organizedMatches.forEach((match, matchIndex) => {
-                    const courtIndex = matchIndex % courts.length;
-                    const assignedCourt = courts[courtIndex] || { number: courtIndex + 1, label: String.fromCharCode(65 + courtIndex) };
-                    
-                    matches.push({
-                        number: matchNumber++,
-                        round: currentRound,
-                        pair1: match.pair1,
-                        pair2: match.pair2,
-                        court: assignedCourt
-                    });
-                });
+                // より良い選択肢がない場合のみ連続を許可
+                if (hasContinuity && selectedMatches.length < possibleMatches.length / 2) {
+                    continue;
+                }
+                
+                selectedMatches.push(match);
+                usedPairs.add(pair1Id);
+                usedPairs.add(pair2Id);
+                
+                // 最後の番号を更新
+                lastPlayerNumbers.front = Math.max(pair1Players.front || 0, pair2Players.front || 0) || lastPlayerNumbers.front;
+                lastPlayerNumbers.back = Math.max(pair1Players.back || 0, pair2Players.back || 0) || lastPlayerNumbers.back;
             }
+            
+            return selectedMatches;
+        }
+        
+        function getPlayerNumbers(pair) {
+            const frontPlayer = pair.players.find(p => p.position === 'front');
+            const backPlayer = pair.players.find(p => p.position === 'back');
+            return {
+                front: frontPlayer ? frontPlayer.number : null,
+                back: backPlayer ? backPlayer.number : null
+            };
         }
         
         function organizeRoundMatches(availableMatches) {
@@ -1273,81 +1308,44 @@
                 return;
             }
 
-            // コート別にマッチをグループ化し、試合順でソート
-            const matchesByCourt = {};
-            matches.forEach(match => {
-                const courtLabel = match.court.label;
-                if (!matchesByCourt[courtLabel]) {
-                    matchesByCourt[courtLabel] = [];
-                }
-                matchesByCourt[courtLabel].push(match);
-            });
-
-            // 各コートの試合を試合番号順にソート
-            Object.keys(matchesByCourt).forEach(courtLabel => {
-                matchesByCourt[courtLabel].sort((a, b) => a.number - b.number);
-            });
-
-            // コート別表示のHTMLを生成（横並び）
-            const courtColumns = Object.keys(matchesByCourt).sort().map(courtLabel => {
-                const courtMatches = matchesByCourt[courtLabel];
-                return `
-                    <div class="court-column">
-                        <div class="court-header">
-                            <h3>コート${courtLabel}</h3>
-                            <div class="court-match-count">${courtMatches.length}試合</div>
+            // 試合順にソートして表示
+            const sortedMatches = [...matches].sort((a, b) => a.number - b.number);
+            
+            const matchesHtml = sortedMatches.map((match, index) => `
+                <div class="match-card-compact">
+                    <div class="match-info">
+                        <span class="match-order-center">${index + 1}試合目</span>
+                        <span class="match-court court-${match.court.label}">コート${match.court.label}</span>
+                    </div>
+                    <div class="match-vs">
+                        <div class="pair-compact">
+                            <div class="pair-label">ペア${match.pair1.number}</div>
+                            <div class="pair-players-compact">
+                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
+                                <span class="separator">+</span>
+                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
+                            </div>
                         </div>
-                        <div class="matches-list">
-                            ${courtMatches.map((match, index) => `
-                                <div class="match-card-compact">
-                                    <div class="match-info">
-                                        <span class="match-number">第${match.number}試合</span>
-                                    </div>
-                                    <div class="match-vs">
-                                        <div class="pair-compact">
-                                            <div class="pair-label">ペア${match.pair1.number}</div>
-                                            <div class="pair-players-compact">
-                                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
-                                                <span class="separator">+</span>
-                                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
-                                            </div>
-                                        </div>
-                                        <div class="vs-compact">VS</div>
-                                        <div class="pair-compact">
-                                            <div class="pair-label">ペア${match.pair2.number}</div>
-                                            <div class="pair-players-compact">
-                                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
-                                                <span class="separator">+</span>
-                                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
+                        <div class="vs-compact">VS</div>
+                        <div class="pair-compact">
+                            <div class="pair-label">ペア${match.pair2.number}</div>
+                            <div class="pair-players-compact">
+                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
+                                <span class="separator">+</span>
+                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
+                            </div>
                         </div>
                     </div>
-                `;
-            });
+                </div>
+            `).join('');
 
-            container.innerHTML = `<div class="courts-grid">${courtColumns.join('')}</div>`;
+            container.innerHTML = `<div class="matches-timeline">${matchesHtml}</div>`;
         }
 
-        function updateStats(totalPlayers, courtCount) {
-            document.getElementById('totalPlayers').textContent = totalPlayers;
-            document.getElementById('totalMatches').textContent = matches.length;
-            
-            // ラウンド数を計算
-            const rounds = matches.length > 0 ? Math.max(...matches.map(m => m.round)) : 0;
-            document.getElementById('totalRounds').textContent = rounds;
-            document.getElementById('activeCourts').textContent = Math.min(courtCount, matches.length);
-            
-            document.getElementById('statsInfo').style.display = 'block';
-        }
 
         // 入力値が変更された時の処理
         function hideResults() {
             document.getElementById('resultsSection').style.display = 'none';
-            document.getElementById('statsInfo').style.display = 'none';
         }
 
         document.getElementById('frontCount').addEventListener('input', hideResults);
