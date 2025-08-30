@@ -899,26 +899,23 @@
                 gap: 15px;
             }
             
-            /* スマホでは2列グリッド表示 */
-            .courts-grid-1 {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 15px;
-                max-width: 100%;
-            }
-            
+            /* スマホでは1列表示に変更 */
+            .courts-grid-1,
             .courts-grid-2,
             .courts-grid-3,
             .courts-grid-4,
             .courts-grid-auto {
                 display: grid;
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
                 gap: 15px;
                 max-width: 100%;
+                width: 100%;
             }
             
             .court-column {
                 min-height: 300px;
+                width: 100%;
+                box-sizing: border-box;
             }
             
             .court-header {
