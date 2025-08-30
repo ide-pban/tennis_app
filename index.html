@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>テニス専用アプリ - 自動ペア決め & 試合スケジュール生成</title>
+    <title>テニス専用アプリ - 試合スケジュール生成</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -1089,7 +1089,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎾 自動ペア決め & 試合スケジュール生成</h1>
+            <h1>🎾 試合スケジュール生成</h1>
         </div>
 
         <div class="input-section">
@@ -1166,16 +1166,16 @@
                     <label>使用するコート</label>
                     <div id="courtSelection" style="display: flex; gap: 15px; margin-top: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
                         <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="A" checked style="margin: 0; vertical-align: middle;"> コートA
+                            <input type="checkbox" value="A" checked style="margin: 0; vertical-align: middle;"> Aコート
                         </label>
                         <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="B" checked style="margin: 0; vertical-align: middle;"> コートB
+                            <input type="checkbox" value="B" checked style="margin: 0; vertical-align: middle;"> Bコート
                         </label>
                         <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="C" style="margin: 0; vertical-align: middle;"> コートC
+                            <input type="checkbox" value="C" style="margin: 0; vertical-align: middle;"> Cコート
                         </label>
                         <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="checkbox" value="D" style="margin: 0; vertical-align: middle;"> コートD
+                            <input type="checkbox" value="D" style="margin: 0; vertical-align: middle;"> Dコート
                         </label>
                     </div>
                 </div>
@@ -1524,7 +1524,7 @@
                 return `
                     <div class="court-column">
                         <div class="court-header court-header-${courtLabel}">
-                            <h3>コート${courtLabel}</h3>
+                            <h3>${courtLabel}コート</h3>
                         </div>
                         <div class="matches-list">
                             ${courtMatches.map((match, index) => `
