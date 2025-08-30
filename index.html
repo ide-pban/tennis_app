@@ -25,7 +25,7 @@
         }
 
         /* タッチスクロールの改善 */
-        .matches-timeline {
+        .courts-grid {
             -webkit-overflow-scrolling: touch;
         }
 
@@ -181,6 +181,54 @@
             text-align: center;
             background: white;
             transition: all 0.3s ease;
+        }
+
+        /* プルダウンスタイル */
+        .number-select {
+            width: 120px;
+            padding: 15px 20px;
+            border: 3px solid #d1d5db;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"><path stroke="%23374151" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .number-select:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* PC・スマホ表示切り替え */
+        .input-row-desktop {
+            display: flex;
+        }
+
+        .input-row-mobile {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .input-row-desktop {
+                display: none;
+            }
+
+            .input-row-mobile {
+                display: flex;
+            }
         }
 
         .input-group input:focus {
@@ -570,6 +618,162 @@
             text-align: center;
         }
 
+        /* コート別表示グリッド */
+        .courts-grid {
+            display: grid;
+            gap: 20px;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        /* 1面用（1列） */
+        .courts-grid-1 {
+            grid-template-columns: 1fr;
+            max-width: 400px;
+        }
+
+        /* 2面用（2列） */
+        .courts-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+        }
+
+        /* 3面用（3列） */
+        .courts-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1200px;
+        }
+
+        /* 4面用（2列2行） */
+        .courts-grid-4 {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 900px;
+        }
+
+        /* 5面以上用（自動調整） */
+        .courts-grid-auto {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+
+        .court-column {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 0;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .court-header {
+            text-align: center;
+            margin-bottom: 0;
+            padding: 20px 15px;
+            color: white;
+            border-radius: 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* コート別の色分け */
+        .court-header-A {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .court-header-B {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .court-header-C {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .court-header-D {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .court-header-E {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .court-header-F {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .court-header-G {
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+        }
+
+        .court-header-H {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        /* 数字のコートの場合 */
+        .court-header-1 {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .court-header-2 {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .court-header-3 {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .court-header-4 {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .court-header-5 {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .court-header-6 {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .court-header-7 {
+            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+        }
+
+        .court-header-8 {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .court-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.4em;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .matches-list {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         /* 小さなスマートフォン用 */
         @media (max-width: 480px) {
             .container { padding: 10px; }
@@ -610,6 +814,14 @@
                 font-size: 20px;
             }
             
+            .number-select {
+                width: 140px;
+                padding: 12px 35px 12px 16px;
+                font-size: 16px;
+                background-size: 16px;
+                background-position: right 8px center;
+            }
+            
             /* コート選択の改善 */
             #courtSelection {
                 flex-direction: column !important;
@@ -647,11 +859,36 @@
             }
             
             
-            /* タイムライン表示最適化 */
-            .matches-timeline {
-                gap: 12px;
+            /* コート表示最適化 */
+            .courts-grid {
+                gap: 15px;
+            }
+            
+            /* スマホでは常に1列表示 */
+            .courts-grid-1,
+            .courts-grid-2,
+            .courts-grid-3,
+            .courts-grid-4,
+            .courts-grid-auto {
+                grid-template-columns: 1fr;
                 max-width: 100%;
-                padding: 0 5px;
+            }
+            
+            .court-column {
+                min-height: 300px;
+            }
+            
+            .court-header {
+                padding: 15px 12px;
+            }
+            
+            .court-header h3 {
+                font-size: 1.2em;
+            }
+            
+            .matches-list {
+                padding: 15px 12px;
+                gap: 12px;
             }
             
             /* コンパクトマッチカード最適化 */
@@ -775,9 +1012,26 @@
                 padding: 25px 20px;
             }
             
-            .matches-timeline {
-                gap: 18px;
+            /* コート表示最適化 */
+            .courts-grid {
+                gap: 20px;
+            }
+            
+            /* タブレットでは適度な調整 */
+            .courts-grid-2 {
+                grid-template-columns: repeat(2, 1fr);
                 max-width: 100%;
+            }
+            
+            .courts-grid-3,
+            .courts-grid-4,
+            .courts-grid-auto {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 100%;
+            }
+            
+            .court-column {
+                min-height: 350px;
             }
             
             /* タブレット用の試合表示調整 */
@@ -821,9 +1075,28 @@
                 margin-top: 30px; 
             }
             
-            .matches-timeline {
-                gap: 20px;
-                max-width: 700px;
+            /* コート表示最適化 */
+            .courts-grid {
+                gap: 25px;
+            }
+            
+            /* 大画面では指定通りのレイアウト */
+            .courts-grid-1 {
+                max-width: 500px;
+            }
+            
+            .courts-grid-2 {
+                max-width: 1000px;
+            }
+            
+            .courts-grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 1200px;
+            }
+            
+            .courts-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 1000px;
             }
         }
     </style>
@@ -838,7 +1111,8 @@
         <div class="input-section">
             <h2 class="section-title">参加者数を入力</h2>
             
-            <div class="input-row">
+            <!-- PC用の入力 -->
+            <div class="input-row input-row-desktop">
                 <div class="input-group">
                     <label for="backCount">後衛の人数</label>
                     <input type="number" id="backCount" min="0" value="4" max="20">
@@ -847,6 +1121,63 @@
                     <label for="frontCount">前衛の人数</label>
                     <input type="number" id="frontCount" min="0" value="4" max="20">
                 </div>
+            </div>
+            
+            <!-- スマホ用の入力 -->
+            <div class="input-row input-row-mobile">
+                <div class="input-group">
+                    <label for="backCountMobile">後衛の人数</label>
+                    <select id="backCountMobile" class="number-select">
+                        <option value="0">0人</option>
+                        <option value="1">1人</option>
+                        <option value="2">2人</option>
+                        <option value="3">3人</option>
+                        <option value="4" selected>4人</option>
+                        <option value="5">5人</option>
+                        <option value="6">6人</option>
+                        <option value="7">7人</option>
+                        <option value="8">8人</option>
+                        <option value="9">9人</option>
+                        <option value="10">10人</option>
+                        <option value="11">11人</option>
+                        <option value="12">12人</option>
+                        <option value="13">13人</option>
+                        <option value="14">14人</option>
+                        <option value="15">15人</option>
+                        <option value="16">16人</option>
+                        <option value="17">17人</option>
+                        <option value="18">18人</option>
+                        <option value="19">19人</option>
+                        <option value="20">20人</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="frontCountMobile">前衛の人数</label>
+                    <select id="frontCountMobile" class="number-select">
+                        <option value="0">0人</option>
+                        <option value="1">1人</option>
+                        <option value="2">2人</option>
+                        <option value="3">3人</option>
+                        <option value="4" selected>4人</option>
+                        <option value="5">5人</option>
+                        <option value="6">6人</option>
+                        <option value="7">7人</option>
+                        <option value="8">8人</option>
+                        <option value="9">9人</option>
+                        <option value="10">10人</option>
+                        <option value="11">11人</option>
+                        <option value="12">12人</option>
+                        <option value="13">13人</option>
+                        <option value="14">14人</option>
+                        <option value="15">15人</option>
+                        <option value="16">16人</option>
+                        <option value="17">17人</option>
+                        <option value="18">18人</option>
+                        <option value="19">19人</option>
+                        <option value="20">20人</option>
+                    </select>
+                </div>
+            </div>
                 <div class="input-group">
                     <label>使用するコート</label>
                     <div id="courtSelection" style="display: flex; gap: 10px; margin-top: 10px;">
@@ -890,8 +1221,16 @@
         let courts = [];
 
         function generateTournament() {
-            const frontCount = parseInt(document.getElementById('frontCount').value) || 0;
-            const backCount = parseInt(document.getElementById('backCount').value) || 0;
+            // デスクトップとモバイルの両方から値を取得
+            const frontCountDesktop = parseInt(document.getElementById('frontCount').value) || 0;
+            const backCountDesktop = parseInt(document.getElementById('backCount').value) || 0;
+            const frontCountMobile = parseInt(document.getElementById('frontCountMobile').value) || 0;
+            const backCountMobile = parseInt(document.getElementById('backCountMobile').value) || 0;
+            
+            // 画面サイズに応じて適切な値を選択
+            const isMobile = window.innerWidth <= 768;
+            const frontCount = isMobile ? frontCountMobile : frontCountDesktop;
+            const backCount = isMobile ? backCountMobile : backCountDesktop;
             
             // 選択されたコートを取得
             const selectedCourts = Array.from(document.querySelectorAll('#courtSelection input[type="checkbox"]:checked'))
@@ -1176,38 +1515,81 @@
                 return;
             }
 
-            // 試合順にソートして表示
-            const sortedMatches = [...matches].sort((a, b) => a.number - b.number);
-            
-            const matchesHtml = sortedMatches.map((match, index) => `
-                <div class="match-card-compact">
-                    <div class="match-info">
-                        <span class="match-order-center">${index + 1}試合目</span>
-                        <span class="match-court court-${match.court.label}">コート${match.court.label}</span>
-                    </div>
-                    <div class="match-vs">
-                        <div class="pair-compact">
-                            <div class="pair-label">ペア${match.pair1.number}</div>
-                            <div class="pair-players-compact">
-                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
-                                <span class="separator">+</span>
-                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
-                            </div>
-                        </div>
-                        <div class="vs-compact">VS</div>
-                        <div class="pair-compact">
-                            <div class="pair-label">ペア${match.pair2.number}</div>
-                            <div class="pair-players-compact">
-                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
-                                <span class="separator">+</span>
-                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            // コート別にマッチをグループ化し、試合順でソート
+            const matchesByCourt = {};
+            matches.forEach(match => {
+                const courtLabel = match.court.label;
+                if (!matchesByCourt[courtLabel]) {
+                    matchesByCourt[courtLabel] = [];
+                }
+                matchesByCourt[courtLabel].push(match);
+            });
 
-            container.innerHTML = `<div class="matches-timeline">${matchesHtml}</div>`;
+            // 各コートの試合を試合番号順にソート
+            Object.keys(matchesByCourt).forEach(courtLabel => {
+                matchesByCourt[courtLabel].sort((a, b) => a.number - b.number);
+            });
+
+            // コート数に応じてレイアウトを決定
+            const courtCount = Object.keys(matchesByCourt).length;
+            const gridClass = getCourtGridClass(courtCount);
+
+            // コート別表示のHTMLを生成
+            const courtColumns = Object.keys(matchesByCourt).sort().map(courtLabel => {
+                const courtMatches = matchesByCourt[courtLabel];
+                return `
+                    <div class="court-column">
+                        <div class="court-header court-header-${courtLabel}">
+                            <h3>コート${courtLabel}</h3>
+                        </div>
+                        <div class="matches-list">
+                            ${courtMatches.map((match, index) => `
+                                <div class="match-card-compact">
+                                    <div class="match-info">
+                                        <span class="match-order-center">${index + 1}試合目</span>
+                                    </div>
+                                    <div class="match-vs">
+                                        <div class="pair-compact">
+                                            <div class="pair-label">ペア${match.pair1.number}</div>
+                                            <div class="pair-players-compact">
+                                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
+                                                <span class="separator">+</span>
+                                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
+                                            </div>
+                                        </div>
+                                        <div class="vs-compact">VS</div>
+                                        <div class="pair-compact">
+                                            <div class="pair-label">ペア${match.pair2.number}</div>
+                                            <div class="pair-players-compact">
+                                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
+                                                <span class="separator">+</span>
+                                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `<div class="courts-grid ${gridClass}">${courtColumns.join('')}</div>`;
+        }
+        
+        function getCourtGridClass(courtCount) {
+            switch(courtCount) {
+                case 1:
+                    return 'courts-grid-1';
+                case 2:
+                    return 'courts-grid-2';
+                case 3:
+                    return 'courts-grid-3';
+                case 4:
+                    return 'courts-grid-4';
+                default:
+                    return 'courts-grid-auto';
+            }
         }
 
 
@@ -1218,6 +1600,8 @@
 
         document.getElementById('frontCount').addEventListener('input', hideResults);
         document.getElementById('backCount').addEventListener('input', hideResults);
+        document.getElementById('frontCountMobile').addEventListener('change', hideResults);
+        document.getElementById('backCountMobile').addEventListener('change', hideResults);
         
         // コート選択の変更イベント
         document.querySelectorAll('#courtSelection input[type="checkbox"]').forEach(checkbox => {
