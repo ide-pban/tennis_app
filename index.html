@@ -809,7 +809,7 @@
                 padding: 10px; 
                 width: 100%;
                 max-width: 100%;
-                overflow-x: hidden;
+                overflow-x: auto;
                 box-sizing: border-box;
             }
             .header { 
@@ -896,13 +896,14 @@
                 margin-top: 20px;
                 width: 100%;
                 max-width: 100%;
-                overflow-x: hidden;
+                overflow-x: auto;
             }
             .schedule-section {
                 padding: 20px 15px;
                 width: 100%;
                 max-width: 100%;
                 box-sizing: border-box;
+                overflow-x: auto;
             }
             
             
@@ -911,24 +912,35 @@
                 gap: 15px;
             }
             
-            /* スマホでは1列表示に変更 */
-            .courts-grid-1,
-            .courts-grid-2,
-            .courts-grid-3,
-            .courts-grid-4,
-            .courts-grid-auto {
+            /* スマホでは2列表示＋横スクロール対応 */
+            .courts-grid-1 {
                 display: grid !important;
                 grid-template-columns: 1fr !important;
-                gap: 15px !important;
-                max-width: 100% !important;
+                gap: 20px !important;
                 width: 100% !important;
                 justify-content: center !important;
                 margin: 0 auto !important;
             }
             
+            .courts-grid-2,
+            .courts-grid-3,
+            .courts-grid-4,
+            .courts-grid-auto {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(160px, 1fr)) !important;
+                gap: 20px !important;
+                width: 100% !important;
+                min-width: 360px !important;
+                justify-content: center !important;
+                margin: 0 auto !important;
+                padding: 0 10px !important;
+                box-sizing: border-box !important;
+            }
+            
             .court-column {
                 min-height: 300px !important;
                 width: 100% !important;
+                min-width: 150px !important;
                 box-sizing: border-box !important;
                 margin: 0 !important;
                 flex-shrink: 0 !important;
@@ -1634,7 +1646,7 @@
                 `;
             });
 
-            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto; width: 100%; overflow-x: hidden;">${courtColumns.join('')}</div>`;
+            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto; width: 100%;">${courtColumns.join('')}</div>`;
         }
         
         function getCourtGridClass(courtCount) {
