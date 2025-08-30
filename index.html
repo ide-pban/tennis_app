@@ -559,26 +559,22 @@
             display: inline-block !important;
             font-size: 12px;
             font-weight: 600;
-            color: white;
-            padding: 3px 6px;
+            color: #374151;
+            padding: 2px 4px;
+            background: white;
             border-radius: 4px;
             border: 1px solid #e5e7eb;
             white-space: nowrap;
             flex-shrink: 0;
-            margin: 1px;
         }
 
-        /* 前衛・後衛の色分け */
-        .player-front {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            border-color: #2563eb;
+        .match-card-compact .separator {
+            display: inline-block !important;
+            font-size: 10px;
+            color: #9ca3af;
+            font-weight: 600;
+            flex-shrink: 0;
         }
-
-        .player-back {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            border-color: #dc2626;
-        }
-
 
         .match-card-compact .vs-compact {
             font-size: 12px;
@@ -888,12 +884,10 @@
             
             /* コート表示最適化 */
             .courts-grid {
-                gap: 8px;
+                gap: 10px;
                 width: 100%;
-                padding: 0;
-                margin: 0 auto;
+                padding: 0 5px;
                 box-sizing: border-box;
-                justify-content: center;
             }
             
             /* スマホでは2列グリッド表示 */
@@ -910,22 +904,17 @@
             .courts-grid-auto {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                gap: 10px;
                 max-width: 100%;
                 width: 100%;
-                padding: 0;
-                margin: 0;
             }
             
             .court-column {
                 min-height: 300px;
-                width: calc(50% - 4px);
-                max-width: calc(50% - 4px);
+                width: 100%;
+                max-width: none;
                 box-sizing: border-box;
                 overflow: hidden;
-                margin: 0;
-                padding: 0;
-                border-radius: 12px;
             }
             
             .court-header {
@@ -975,13 +964,14 @@
             }
             .pair-players-compact {
                 padding: 2px 4px;
-                gap: 3px;
-                justify-content: center;
+                gap: 2px;
             }
             .player {
                 font-size: 10px;
-                padding: 2px 4px;
-                margin: 1px;
+                padding: 1px 3px;
+            }
+            .separator {
+                font-size: 8px;
             }
             
             /* モバイル特有の可読性向上 */
@@ -1607,16 +1597,18 @@
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair1.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player ${match.pair1.players[0].position === 'front' ? 'player-front' : 'player-back'}">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
-                                                <span class="player ${match.pair1.players[1].position === 'front' ? 'player-front' : 'player-back'}">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
+                                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
+                                                <span class="separator">+</span>
+                                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
                                             </div>
                                         </div>
                                         <div class="vs-compact">VS</div>
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair2.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player ${match.pair2.players[0].position === 'front' ? 'player-front' : 'player-back'}">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
-                                                <span class="player ${match.pair2.players[1].position === 'front' ? 'player-front' : 'player-back'}">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
+                                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
+                                                <span class="separator">+</span>
+                                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
                                             </div>
                                         </div>
                                     </div>
