@@ -559,21 +559,24 @@
             display: inline-block !important;
             font-size: 12px;
             font-weight: 600;
-            color: #374151;
-            padding: 2px 4px;
-            background: white;
+            color: white;
+            padding: 3px 6px;
             border-radius: 4px;
             border: 1px solid #e5e7eb;
             white-space: nowrap;
             flex-shrink: 0;
+            margin: 1px;
         }
 
-        .match-card-compact .separator {
-            display: inline-block !important;
-            font-size: 10px;
-            color: #9ca3af;
-            font-weight: 600;
-            flex-shrink: 0;
+        /* 前衛・後衛の色分け */
+        .player-front {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: #2563eb;
+        }
+
+        .player-back {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #dc2626;
         }
 
 
@@ -845,8 +848,10 @@
             #courtSelection {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
+                grid-template-rows: repeat(2, 1fr) !important;
                 gap: 8px !important;
                 align-items: stretch !important;
+                justify-content: center !important;
             }
             #courtSelection label {
                 font-size: 14px !important;
@@ -883,7 +888,12 @@
             
             /* コート表示最適化 */
             .courts-grid {
-                gap: 15px;
+                gap: 8px;
+                width: 100%;
+                padding: 0;
+                margin: 0 auto;
+                box-sizing: border-box;
+                justify-content: center;
             }
             
             /* スマホでは2列グリッド表示 */
@@ -900,12 +910,22 @@
             .courts-grid-auto {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 8px;
                 max-width: 100%;
+                width: 100%;
+                padding: 0;
+                margin: 0;
             }
             
             .court-column {
                 min-height: 300px;
+                width: calc(50% - 4px);
+                max-width: calc(50% - 4px);
+                box-sizing: border-box;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+                border-radius: 12px;
             }
             
             .court-header {
@@ -938,11 +958,19 @@
             }
             .match-vs {
                 flex-direction: row !important;
-                gap: 4px;
+                gap: 6px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                width: 100% !important;
             }
             .pair-compact {
-                flex: 1;
-                min-width: 0;
+                flex: 1 !important;
+                min-width: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
             }
             .pair-label {
                 font-size: 10px;
@@ -955,14 +983,36 @@
             }
             .pair-players-compact {
                 padding: 2px 4px;
-                gap: 2px;
+                gap: 4px !important;
+                justify-content: center;
+                flex-wrap: nowrap !important;
+                display: flex !important;
+                align-items: center !important;
             }
             .player {
-                font-size: 10px;
-                padding: 1px 3px;
+                font-size: 10px !important;
+                padding: 3px 5px !important;
+                margin: 1px !important;
+                color: white !important;
+                border-radius: 4px !important;
+                font-weight: 600 !important;
+                border: 1px solid !important;
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+                display: inline-block !important;
             }
-            .separator {
-                font-size: 8px;
+            
+            /* スマホでの前衛・後衛色分け */
+            .player-front {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+                border-color: #2563eb !important;
+                box-shadow: 0 1px 3px rgba(59, 130, 246, 0.4) !important;
+            }
+
+            .player-back {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+                border-color: #dc2626 !important;
+                box-shadow: 0 1px 3px rgba(239, 68, 68, 0.4) !important;
             }
             
             /* モバイル特有の可読性向上 */
@@ -1085,9 +1135,21 @@
             .player {
                 font-size: 11px;
                 padding: 2px 4px;
+                color: white !important;
+                border-radius: 4px;
+                font-weight: 600;
+                margin: 1px;
             }
-            .separator {
-                font-size: 9px;
+            
+            /* タブレットでの前衛・後衛色分け */
+            .player-front {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+                border-color: #2563eb !important;
+            }
+
+            .player-back {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+                border-color: #dc2626 !important;
             }
         }
 
@@ -1217,20 +1279,20 @@
                     </select>
                 </div>
             </div>
-                <div class="input-group">
+                <div class="input-group" style="text-align: center;">
                     <label>使用するコート</label>
-                    <div id="courtSelection" style="display: flex; gap: 10px; margin-top: 10px;">
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="A" checked> コートA
+                    <div id="courtSelection" style="display: flex; gap: 15px; margin-top: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="A" checked style="margin: 0; vertical-align: middle;"> コートA
                         </label>
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="B" checked> コートB
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="B" checked style="margin: 0; vertical-align: middle;"> コートB
                         </label>
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="C"> コートC
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="C" style="margin: 0; vertical-align: middle;"> コートC
                         </label>
-                        <label style="font-size: 16px; font-weight: normal;">
-                            <input type="checkbox" value="D"> コートD
+                        <label style="font-size: 16px; font-weight: normal; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" value="D" style="margin: 0; vertical-align: middle;"> コートD
                         </label>
                     </div>
                 </div>
@@ -1246,7 +1308,7 @@
         <div class="results-section" id="resultsSection" style="display: none;">
             <div class="schedule-section">
                 <h2 class="section-title">試合スケジュール</h2>
-                <div id="matchesContainer">
+                <div id="matchesContainer" style="display: flex; justify-content: center; width: 100%;">
                     <!-- 試合がここに表示される -->
                 </div>
             </div>
@@ -1591,18 +1653,16 @@
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair1.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
-                                                <span class="separator">+</span>
-                                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
+                                                <span class="player ${match.pair1.players[0].position === 'front' ? 'player-front' : 'player-back'}">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
+                                                <span class="player ${match.pair1.players[1].position === 'front' ? 'player-front' : 'player-back'}">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
                                             </div>
                                         </div>
                                         <div class="vs-compact">VS</div>
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair2.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
-                                                <span class="separator">+</span>
-                                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
+                                                <span class="player ${match.pair2.players[0].position === 'front' ? 'player-front' : 'player-back'}">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
+                                                <span class="player ${match.pair2.players[1].position === 'front' ? 'player-front' : 'player-back'}">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1613,7 +1673,7 @@
                 `;
             });
 
-            container.innerHTML = `<div class="courts-grid ${gridClass}">${courtColumns.join('')}</div>`;
+            container.innerHTML = `<div class="courts-grid ${gridClass}" style="display: grid; justify-content: center; margin: 0 auto;">${courtColumns.join('')}</div>`;
         }
         
         function getCourtGridClass(courtCount) {
