@@ -25,8 +25,7 @@
         }
 
         /* タッチスクロールの改善 */
-        .courts-grid,
-        .pairs-grid {
+        .matches-timeline {
             -webkit-overflow-scrolling: touch;
         }
 
@@ -417,124 +416,7 @@
             to { transform: rotate(360deg); }
         }
 
-        .stats-info {
-            background: #f0fdf4;
-            border: 2px solid #bbf7d0;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
 
-        .stats-info h3 {
-            color: #166534;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
-
-        .stat-item {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-number {
-            font-size: 1.8em;
-            font-weight: 800;
-            color: #16a34a;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #6b7280;
-            font-weight: 600;
-        }
-
-        .courts-grid {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 20px;
-            align-items: start;
-            margin-top: 20px;
-            overflow-x: auto;
-            padding: 0 10px;
-        }
-
-        .court-column {
-            flex: 0 0 300px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 0;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            overflow: hidden;
-            min-height: 400px;
-        }
-
-        .court-header {
-            text-align: center;
-            margin-bottom: 0;
-            padding: 20px 15px;
-            background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
-            color: white;
-            border-radius: 0;
-            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .court-header h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.4em;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .court-match-count {
-            font-size: 0.9em;
-            opacity: 0.9;
-            font-weight: 600;
-        }
-
-        .matches-list {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .court-column .match-card {
-            margin-bottom: 0;
-            border-radius: 12px;
-            background: white;
-            border: 2px solid #f1f5f9;
-            transition: all 0.3s ease;
-        }
-
-        .court-column .match-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            border-color: #16a34a;
-        }
-
-        .match-order {
-            background: #f8fafc;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #64748b;
-        }
 
         /* コンパクトな試合カードデザイン */
         .match-card-compact {
@@ -764,20 +646,6 @@
                 padding: 20px 15px;
             }
             
-            /* 統計情報最適化 */
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .stat-item {
-                padding: 12px;
-            }
-            .stat-number {
-                font-size: 1.5em;
-            }
-            .stat-label {
-                font-size: 11px;
-            }
             
             /* タイムライン表示最適化 */
             .matches-timeline {
