@@ -803,8 +803,8 @@
             gap: 15px;
         }
 
-        /* 小さなスマートフォン用 */
-        @media (max-width: 480px) {
+        /* スマートフォン用（768px以下） */
+        @media (max-width: 768px) {
             .container { 
                 padding: 10px; 
                 width: 100%;
@@ -927,12 +927,12 @@
             .courts-grid-4,
             .courts-grid-auto {
                 display: grid !important;
-                grid-template-columns: repeat(2, minmax(160px, 1fr)) !important;
+                grid-template-columns: repeat(2, minmax(170px, 1fr)) !important;
                 gap: 20px !important;
-                width: 100% !important;
-                min-width: 360px !important;
-                justify-content: center !important;
-                margin: 0 auto !important;
+                width: auto !important;
+                min-width: 380px !important;
+                justify-content: start !important;
+                margin: 0 !important;
                 padding: 0 10px !important;
                 box-sizing: border-box !important;
             }
@@ -1035,96 +1035,6 @@
             }
         }
         
-        /* タブレット・中型スマートフォン用 */
-        @media (min-width: 481px) and (max-width: 768px) {
-            .container { padding: 15px; }
-            .header { padding: 30px 20px; }
-            .header h1 { font-size: 2.2em; }
-            .header p { font-size: 1.1em; }
-            .tennis-icon { display: none; }
-            
-            .input-section { padding: 30px 20px; }
-            .input-row { 
-                flex-direction: row; 
-                gap: 15px; 
-                align-items: end; 
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            .input-group { 
-                min-width: 140px;
-            }
-            
-            /* コート選択の改善 */
-            #courtSelection {
-                flex-wrap: wrap !important;
-                gap: 8px !important;
-                justify-content: center !important;
-            }
-            #courtSelection label {
-                font-size: 15px !important;
-                padding: 6px 12px !important;
-                background: #f8fafc;
-                border-radius: 8px;
-            }
-            
-            .generate-btn { 
-                padding: 18px 40px; 
-                font-size: 18px; 
-            }
-            
-            .results-section { 
-                margin-top: 25px;
-            }
-            .schedule-section {
-                padding: 25px 20px;
-            }
-            
-            /* コート表示最適化 */
-            .courts-grid {
-                gap: 20px;
-            }
-            
-            /* タブレットでは適度な調整 */
-            .courts-grid-1 {
-                grid-template-columns: 1fr;
-                max-width: 450px;
-            }
-            
-            .courts-grid-2 {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 100%;
-            }
-            
-            .courts-grid-3,
-            .courts-grid-4,
-            .courts-grid-auto {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 100%;
-            }
-            
-            .court-column {
-                min-height: 350px;
-            }
-            
-            /* タブレット用の試合表示調整 */
-            .match-vs {
-                flex-direction: row !important;
-                gap: 8px;
-            }
-            .vs-compact {
-                font-size: 11px;
-                padding: 4px 6px;
-            }
-            .pair-players-compact {
-                padding: 4px 8px;
-                gap: 4px;
-            }
-            .player {
-                font-size: 11px;
-                padding: 2px 4px;
-            }
-        }
 
         /* 大画面スマートフォン・小型タブレット用 */
         @media (min-width: 769px) and (max-width: 1024px) {
