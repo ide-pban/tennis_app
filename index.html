@@ -806,7 +806,7 @@
         /* スマートフォン用（768px以下） */
         @media (max-width: 768px) {
             .container { 
-                padding: 10px; 
+                padding: 10px 5px; 
                 width: 100%;
                 max-width: 100%;
                 overflow-x: auto;
@@ -897,9 +897,10 @@
                 width: 100%;
                 max-width: 100%;
                 overflow-x: auto;
+                padding: 0;
             }
             .schedule-section {
-                padding: 20px 15px;
+                padding: 20px 5px;
                 width: 100%;
                 max-width: 100%;
                 box-sizing: border-box;
@@ -927,23 +928,24 @@
             .courts-grid-4,
             .courts-grid-auto {
                 display: grid !important;
-                grid-template-columns: repeat(2, minmax(170px, 1fr)) !important;
-                gap: 20px !important;
-                width: auto !important;
-                min-width: 380px !important;
-                justify-content: start !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                justify-content: stretch !important;
                 margin: 0 !important;
-                padding: 0 10px !important;
+                padding: 0 5px !important;
                 box-sizing: border-box !important;
             }
             
             .court-column {
                 min-height: 300px !important;
                 width: 100% !important;
-                min-width: 150px !important;
+                max-width: 100% !important;
                 box-sizing: border-box !important;
                 margin: 0 !important;
                 flex-shrink: 0 !important;
+                padding: 0 !important;
             }
             
             .court-header {
@@ -955,7 +957,7 @@
             }
             
             .matches-list {
-                padding: 15px 12px;
+                padding: 15px 8px;
                 gap: 12px;
             }
             
