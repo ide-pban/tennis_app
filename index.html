@@ -568,6 +568,18 @@
             flex-shrink: 0;
         }
 
+        .match-card-compact .player.back {
+            color: white;
+            background: #dc2626;
+            border: 1px solid #dc2626;
+        }
+
+        .match-card-compact .player.front {
+            color: white;
+            background: #2563eb;
+            border: 1px solid #2563eb;
+        }
+
         .match-card-compact .separator {
             display: inline-block !important;
             font-size: 10px;
@@ -1589,18 +1601,16 @@
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair1.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
-                                                <span class="separator">+</span>
-                                                <span class="player">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
+                                                <span class="player ${match.pair1.players[0].position}">${match.pair1.players[0].position === 'front' ? '前' + match.pair1.players[0].number : '後' + match.pair1.players[0].number}</span>
+                                                <span class="player ${match.pair1.players[1].position}">${match.pair1.players[1].position === 'front' ? '前' + match.pair1.players[1].number : '後' + match.pair1.players[1].number}</span>
                                             </div>
                                         </div>
                                         <div class="vs-compact">VS</div>
                                         <div class="pair-compact">
                                             <div class="pair-label">ペア${match.pair2.number}</div>
                                             <div class="pair-players-compact">
-                                                <span class="player">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
-                                                <span class="separator">+</span>
-                                                <span class="player">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
+                                                <span class="player ${match.pair2.players[0].position}">${match.pair2.players[0].position === 'front' ? '前' + match.pair2.players[0].number : '後' + match.pair2.players[0].number}</span>
+                                                <span class="player ${match.pair2.players[1].position}">${match.pair2.players[1].position === 'front' ? '前' + match.pair2.players[1].number : '後' + match.pair2.players[1].number}</span>
                                             </div>
                                         </div>
                                     </div>
