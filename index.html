@@ -580,6 +580,51 @@
             border: 1px solid #2563eb;
         }
 
+        /* LINE共有ボタンのスタイル */
+        .share-btn {
+            background: linear-gradient(135deg, #00C300 0%, #00B000 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 195, 0, 0.3);
+            margin: 20px auto;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 195, 0, 0.4);
+        }
+
+        .share-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .share-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .share-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
         .match-card-compact .separator {
             display: inline-block !important;
             font-size: 10px;
@@ -1196,10 +1241,14 @@
                 <div id="matchesContainer" style="display: flex; justify-content: center; width: 100%;">
                     <!-- 試合がここに表示される -->
                 </div>
+                <button class="share-btn" id="shareBtn" onclick="shareAsImage()" style="display: none;">
+                    📷 画像で共有
+                </button>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         let players = [];
         let pairs = [];
@@ -1486,6 +1535,175 @@
             displayMatches();
             
             document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('shareBtn').style.display = 'block';
+        }
+
+        function formatResultsForLine() {
+            let text = "🎾 試合スケジュール\n\n";
+            
+            // コート別にマッチをグループ化
+            const matchesByCourt = {};
+            matches.forEach(match => {
+                const courtLabel = match.court.label;
+                if (!matchesByCourt[courtLabel]) {
+                    matchesByCourt[courtLabel] = [];
+                }
+                matchesByCourt[courtLabel].push(match);
+            });
+
+            // 各コートの試合を試合番号順にソート
+            Object.keys(matchesByCourt).forEach(courtLabel => {
+                matchesByCourt[courtLabel].sort((a, b) => a.number - b.number);
+            });
+
+            // コート別に整形
+            Object.keys(matchesByCourt).sort().forEach(courtLabel => {
+                text += `【${courtLabel}コート】\n`;
+                const courtMatches = matchesByCourt[courtLabel];
+                
+                courtMatches.forEach((match, index) => {
+                    const pair1Back = match.pair1.players.find(p => p.position === 'back');
+                    const pair1Front = match.pair1.players.find(p => p.position === 'front');
+                    const pair2Back = match.pair2.players.find(p => p.position === 'back');
+                    const pair2Front = match.pair2.players.find(p => p.position === 'front');
+                    
+                    const pair1Text = `後${pair1Back.number}前${pair1Front.number}`;
+                    const pair2Text = `後${pair2Back.number}前${pair2Front.number}`;
+                    
+                    text += `第${index + 1}試合: ${pair1Text} VS ${pair2Text}\n`;
+                });
+                text += "\n";
+            });
+
+            return text.trim();
+        }
+
+        async function shareAsImage() {
+            const shareBtn = document.getElementById('shareBtn');
+            const originalText = shareBtn.textContent;
+            
+            try {
+                // ボタンを無効化して処理中であることを示す
+                shareBtn.textContent = '📷 画像作成中...';
+                shareBtn.disabled = true;
+                
+                // キャプチャ対象の要素を取得
+                const resultsSection = document.getElementById('resultsSection');
+                
+                // 一時的にボタンを非表示にする
+                shareBtn.style.display = 'none';
+                
+                // 画像生成のためのオプション
+                const options = {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // 高解像度
+                    useCORS: true,
+                    allowTaint: false,
+                    width: resultsSection.scrollWidth,
+                    height: resultsSection.scrollHeight,
+                    scrollX: 0,
+                    scrollY: 0
+                };
+                
+                // html2canvasで画像を生成
+                const canvas = await html2canvas(resultsSection, options);
+                
+                // ボタンを再表示
+                shareBtn.style.display = 'block';
+                shareBtn.textContent = originalText;
+                shareBtn.disabled = false;
+                
+                // canvasをblobに変換
+                canvas.toBlob(async (blob) => {
+                    if (!blob) {
+                        alert('画像の生成に失敗しました');
+                        return;
+                    }
+                    
+                    const file = new File([blob], '試合スケジュール.png', { type: 'image/png' });
+                    
+                    // Web Share APIで画像を共有
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                title: '🎾 試合スケジュール',
+                                text: '試合スケジュールを共有します',
+                                files: [file]
+                            });
+                        } catch (err) {
+                            if (err.name !== 'AbortError') {
+                                console.log('共有がキャンセルされました');
+                                showImageFallback(canvas);
+                            }
+                        }
+                    } else {
+                        // フォールバック: 画像をダウンロード
+                        showImageFallback(canvas);
+                    }
+                }, 'image/png', 0.95);
+                
+            } catch (error) {
+                console.error('画像生成エラー:', error);
+                shareBtn.textContent = originalText;
+                shareBtn.disabled = false;
+                shareBtn.style.display = 'block';
+                alert('画像の生成に失敗しました。もう一度お試しください。');
+            }
+        }
+        
+        function showImageFallback(canvas) {
+            // 画像をダウンロードリンクとして提供
+            const link = document.createElement('a');
+            link.download = '試合スケジュール.png';
+            link.href = canvas.toDataURL('image/png');
+            
+            // モーダルでダウンロードを案内
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                justify-content: center; z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white; padding: 30px; border-radius: 20px; 
+                max-width: 90%; max-height: 80%; overflow-y: auto; 
+                text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            `;
+            
+            content.innerHTML = `
+                <h3 style="margin-bottom: 20px; color: #166534;">📷 画像で共有</h3>
+                <p style="margin-bottom: 20px;">画像をダウンロードしてLINEやSNSで共有してください</p>
+                <div style="margin-bottom: 20px;">
+                    <img src="${canvas.toDataURL('image/png')}" style="max-width: 100%; max-height: 200px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" alt="試合スケジュール">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="downloadImage()" style="padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer;">画像をダウンロード</button>
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" style="padding: 10px 20px; background: #6b7280; color: white; border: none; border-radius: 8px; cursor: pointer;">閉じる</button>
+                </div>
+            `;
+            
+            // ダウンロード関数をモーダル内で定義
+            window.downloadImage = () => {
+                link.click();
+                modal.remove();
+                
+                // スマホの場合は追加の案内を表示
+                if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
+                    setTimeout(() => {
+                        alert('画像がダウンロードされました！\n写真アプリから画像を選んでLINEやSNSで共有してください。');
+                    }, 500);
+                }
+            };
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            // 背景クリックで閉じる
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
         }
 
 
@@ -1580,7 +1798,89 @@
         // 入力値が変更された時の処理
         function hideResults() {
             document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('shareBtn').style.display = 'none';
         }
+
+        // URLから結果を復元する機能
+        function loadFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+            
+            if (dataParam) {
+                try {
+                    const data = JSON.parse(atob(dataParam));
+                    
+                    // プレイヤー復元
+                    players = [];
+                    for (let i = 1; i <= data.frontCount; i++) {
+                        players.push({
+                            number: i,
+                            position: 'front',
+                            displayName: `前衛${i}番`
+                        });
+                    }
+                    for (let i = 1; i <= data.backCount; i++) {
+                        players.push({
+                            number: i,
+                            position: 'back',
+                            displayName: `後衛${i}番`
+                        });
+                    }
+                    
+                    // コート復元
+                    courts = data.courts.map((label, index) => ({
+                        number: index + 1,
+                        label: label
+                    }));
+                    
+                    // ペア復元
+                    pairs = [];
+                    const frontPlayers = players.filter(p => p.position === 'front');
+                    const backPlayers = players.filter(p => p.position === 'back');
+                    
+                    // 試合復元
+                    matches = data.matches.map((m, index) => {
+                        const pair1Players = m.pair1.map(p => ({
+                            number: p.n,
+                            position: p.p,
+                            displayName: p.p === 'front' ? `前衛${p.n}番` : `後衛${p.n}番`
+                        }));
+                        const pair2Players = m.pair2.map(p => ({
+                            number: p.n,
+                            position: p.p,
+                            displayName: p.p === 'front' ? `前衛${p.n}番` : `後衛${p.n}番`
+                        }));
+                        
+                        return {
+                            number: index + 1,
+                            pair1: { players: pair1Players, number: index * 2 + 1 },
+                            pair2: { players: pair2Players, number: index * 2 + 2 },
+                            court: courts.find(c => c.label === m.court)
+                        };
+                    });
+                    
+                    // 入力フィールドに値を設定
+                    document.getElementById('frontCount').value = data.frontCount;
+                    document.getElementById('backCount').value = data.backCount;
+                    document.getElementById('frontCountMobile').value = data.frontCount;
+                    document.getElementById('backCountMobile').value = data.backCount;
+                    
+                    // コート選択を設定
+                    document.querySelectorAll('#courtSelection input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.checked = data.courts.includes(checkbox.value);
+                    });
+                    
+                    // 結果を表示
+                    displayResults();
+                    
+                } catch (error) {
+                    console.error('URLデータの復元に失敗しました:', error);
+                }
+            }
+        }
+
+        // ページ読み込み時に実行
+        document.addEventListener('DOMContentLoaded', loadFromUrl);
 
         document.getElementById('frontCount').addEventListener('input', hideResults);
         document.getElementById('backCount').addEventListener('input', hideResults);
