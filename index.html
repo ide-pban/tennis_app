@@ -625,6 +625,25 @@
             height: 300px;
         }
 
+        /* フッタースタイル */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px 16px 0 0;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
         .match-card-compact .separator {
             display: inline-block !important;
             font-size: 10px;
@@ -835,11 +854,17 @@
         /* スマートフォン用（768px以下） */
         @media (max-width: 768px) {
             .container { 
-                padding: 10px 5px; 
+                padding: 10px 5px 0; 
                 width: 100%;
                 max-width: 100%;
                 overflow-x: auto;
                 box-sizing: border-box;
+            }
+            
+            .footer {
+                padding: 20px 10px;
+                margin-top: 30px;
+                font-size: 12px;
             }
             .header { 
                 padding: 20px 15px; 
@@ -1229,6 +1254,10 @@
                     📷 画像で共有
                 </button>
             </div>
+        </div>
+        
+        <div class="footer">
+            <p>Developed by Takumi Ide</p>
         </div>
     </div>
 
