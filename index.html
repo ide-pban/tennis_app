@@ -749,88 +749,72 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* コート別の色分け */
-        .court-header-A {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        .court-header::after {
+            content: '🎾';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            opacity: 0.7;
         }
 
-        .court-header-B {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .court-header-C {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .court-header-D {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        .court-header-E {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-        }
-
-        .court-header-F {
-            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-        }
-
-        .court-header-G {
-            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
-            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
-        }
-
-        .court-header-H {
-            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
-            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
-        }
-
-        /* 数字のコートの場合 */
-        .court-header-1 {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-        }
-
-        .court-header-2 {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .court-header-3 {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .court-header-4 {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        .court-header-5 {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-        }
-
-        .court-header-6 {
-            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-        }
-
-        .court-header-7 {
-            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
-            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
-        }
-
+        /* テニスコート風のヘッダーデザイン */
+        .court-header-A,
+        .court-header-B,
+        .court-header-C,
+        .court-header-D,
+        .court-header-E,
+        .court-header-F,
+        .court-header-G,
+        .court-header-H,
+        .court-header-1,
+        .court-header-2,
+        .court-header-3,
+        .court-header-4,
+        .court-header-5,
+        .court-header-6,
+        .court-header-7,
         .court-header-8 {
-            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
-            box-shadow: 0 4px 15px rgba(100, 116, 139, 0.3);
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 50%, #2d5a27 100%);
+            box-shadow: 0 4px 15px rgba(45, 90, 39, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .court-header-A::before,
+        .court-header-B::before,
+        .court-header-C::before,
+        .court-header-D::before,
+        .court-header-E::before,
+        .court-header-F::before,
+        .court-header-G::before,
+        .court-header-H::before,
+        .court-header-1::before,
+        .court-header-2::before,
+        .court-header-3::before,
+        .court-header-4::before,
+        .court-header-5::before,
+        .court-header-6::before,
+        .court-header-7::before,
+        .court-header-8::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 8px;
+            background: 
+                /* サイドライン */
+                linear-gradient(to right, transparent 20%, #ffffff 20%, #ffffff 22%, transparent 22%),
+                linear-gradient(to right, transparent 78%, #ffffff 78%, #ffffff 80%, transparent 80%);
+            border: 1px solid #ffffff;
+            border-radius: 2px;
+            opacity: 0.6;
         }
 
         .court-header h3 {
